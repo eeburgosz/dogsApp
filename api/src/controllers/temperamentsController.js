@@ -28,7 +28,6 @@ const getDbTemperaments = async () => {
          }
       });
    });
-   console.log(temps);
    return temps;
 };
 

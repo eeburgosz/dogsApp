@@ -1,8 +1,7 @@
 const { getDbTemperaments } = require('../controllers/temperamentsController');
 
 const temperamentHandler = async (req, res) => {
-   const apiTemper = await getDbTemperaments();
-   res.status(200).send(apiTemper);
+   res.status(200).send(await getDbTemperaments());
 };
 
 module.exports = { temperamentHandler };
