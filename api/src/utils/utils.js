@@ -32,4 +32,45 @@ const cleanObj = (obj) => {
    return cleanData(obj);
 };
 
-module.exports = { cleanArray, cleanObj };
+const cleanDbDog = (dbDogRaw) => {
+   //console.log(dbDogRaw.toJSON().Temperaments);
+   const temperament = dbDogRaw.Temperaments.reduce((acc, curr) => {
+      return acc.concat(curr.name);
+   }, []);
+
+   const formattedDog = {
+      id: dbDogRaw.id,
+      name: dbDogRaw.name,
+      maxHeight: dbDogRaw.maxHeight,
+      minHeight: dbDogRaw.minHeight,
+      maxWeight: dbDogRaw.maxWeight,
+      minWeight: dbDogRaw.minWeight,
+      life_span: dbDogRaw.life_span,
+      img: dbDogRaw.img,
+      description: dbDogRaw.description,
+      created: dbDogRaw.created,
+      temperament: temperament
+   };
+
+   return formattedDog;
+};
+
+const cleanDbDogs = (dogsDbRaw) => {
+   return dogsDbRaw.map((item) => {
+      return {
+         id: item.id,
+         name: item.name,
+         maxHeight: item.maxHeight,
+         minHeight: item.minHeight,
+         maxWeight: item.maxWeight,
+         minWeight: item.minWeight,
+         life_span: item.life_span,
+         img: item.img,
+         description: item.description,
+         created: item.created,
+         temperament: item.Temperaments.map((temp) => temp.name),
+      };
+   });
+};
+
+module.exports = { cleanArray, cleanObj, cleanDbDog, cleanDbDogs };

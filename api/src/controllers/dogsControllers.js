@@ -1,6 +1,6 @@
 const axios = require('axios');
-const { Dog, Temperament, DogTemperament } = require('../db');
-const { cleanArray, cleanObj } = require('../utils/utils');
+const { Dog, Temperament } = require('../db');
+const { cleanArray, cleanObj, cleanDbDog, cleanDbDogs } = require('../utils/utils');
 
 
 const createDog = async (name, temperament, maxHeight, minHeight, maxWeight, minWeight, life_span, img, description) => {
@@ -27,18 +27,7 @@ const createDog = async (name, temperament, maxHeight, minHeight, maxWeight, min
    });
    await newDog.addTemperaments(selectedTemperaments);
 
-   return {
-      id: newDog.id,
-      name: newDog.name,
-      temperament: selectedTemperaments.map((temperament) => temperament.name),
-      maxHeight: newDog.maxHeight,
-      minHeight: newDog.minHeight,
-      maxWeight: newDog.maxWeight,
-      minWeight: newDog.minWeight,
-      life_span: newDog.life_span,
-      img: newDog.img,
-      description: newDog.description,
-   };
+   return newDog;
 };
 
 const getDogById = async (id, source) => {
@@ -49,7 +38,15 @@ const getDogById = async (id, source) => {
       const dogApi = cleanObj(dogApiRaw);
       return dogApi;
    } else {
-      return await Dog.findByPk(id);
+      const dbDogRaw = await Dog.findByPk(id, {
+         include: [{
+            model: Temperament
+         }]
+      });
+      // console.log(dbDogRaw.toJSON());
+      const dbDog = cleanDbDog(dbDogRaw);
+      // console.log(dbDog);
+      return dbDog;
    }
 };
 
@@ -62,7 +59,14 @@ const searchDogByName = async (name) => {
 };
 
 const getAllDogs = async () => {
-   const dogsDb = await Dog.findAll();
+   const dogsDbRaw = await Dog.findAll({
+      include: [{
+         model: Temperament
+      }]
+   });
+   // console.log(dogsDbRaw);
+   const dogsDb = cleanDbDogs(dogsDbRaw);
+   console.log("Dogs DB: ", dogsDb);
    const dogsApiRaw = (await axios.get("https://api.thedogapi.com/v1/breeds/")).data;
    // console.log(dogsApiRaw);
    const dogsApi = cleanArray(dogsApiRaw);
