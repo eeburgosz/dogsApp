@@ -14,25 +14,34 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true
     },
-    alturaMax: {
+    maxHeight: {
       type: DataTypes.DECIMAL,
       allowNull: false
     },
-    alturaMin: {
+    minHeight: {
       type: DataTypes.DECIMAL,
       allowNull: false
     },
-    pesoMax: {
+    maxWeight: {
       type: DataTypes.DECIMAL,
       allowNull: false
     },
-    pesoMin: {
+    minWeight: {
       type: DataTypes.DECIMAL,
       allowNull: false
     },
-    edadProm: {
+    life_span: {
       type: DataTypes.DECIMAL,
     },
+    img: {
+      type: DataTypes.STRING,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    // temperament: {
+    //   type: DataTypes.ARRAY(DataTypes.STRING),
+    // },
     created: {
       type: DataTypes.BOOLEAN,
       defaultValue: true

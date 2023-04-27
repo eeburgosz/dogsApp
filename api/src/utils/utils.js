@@ -20,6 +20,7 @@ const cleanData = (data) => {
       life_span: lifeSpan,
       img,
       description,
+      created: false
    };
 };
 

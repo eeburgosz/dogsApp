@@ -1,18 +1,44 @@
 const axios = require('axios');
-const { Dog, Temperament } = require('../db');
+const { Dog, Temperament, DogTemperament } = require('../db');
 const { cleanArray, cleanObj } = require('../utils/utils');
 
 
-const createDog = async (name, temperament, alturaMax, alturaMin, pesoMax, pesoMin, edadProm) => {
-   return await Dog.create({
-      name,
-      temperament,
-      alturaMax,
-      alturaMin,
-      pesoMax,
-      pesoMin,
-      edadProm
+const createDog = async (name, temperament, maxHeight, minHeight, maxWeight, minWeight, life_span, img, description) => {
+
+   const exist = await Dog.findOne({
+      where: { name }
    });
+   if (exist) throw new Error("Dog already exists");
+
+   const newDog = await Dog.create({
+      name,
+      maxHeight,
+      minHeight,
+      maxWeight,
+      minWeight,
+      life_span,
+      img,
+      description,
+   });
+   const selectedTemperaments = await Temperament.findAll({
+      where: {
+         name: temperament,
+      },
+   });
+   await newDog.addTemperaments(selectedTemperaments);
+
+   return {
+      id: newDog.id,
+      name: newDog.name,
+      temperament: selectedTemperaments.map((temperament) => temperament.name),
+      maxHeight: newDog.maxHeight,
+      minHeight: newDog.minHeight,
+      maxWeight: newDog.maxWeight,
+      minWeight: newDog.minWeight,
+      life_span: newDog.life_span,
+      img: newDog.img,
+      description: newDog.description,
+   };
 };
 
 const getDogById = async (id, source) => {

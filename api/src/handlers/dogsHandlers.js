@@ -1,10 +1,9 @@
 const { createDog, getDogById, searchDogByName, getAllDogs } = require('../controllers/dogsControllers');
 
 const createDogHandler = async (req, res) => {
-   //! Como mi handler no debe interactuar con el modelo, creo un controller que lo haga. Por razones de buena práctica, no se le pasa la request al controller, por eso se desestructuran aquí en en hanlder y se le pasan como parámetro en la función.
-   const { name, temperament, alturaMax, alturaMin, pesoMax, pesoMin, edadProm } = req.body;
+   const { name, temperament, maxHeight, minHeight, maxWeight, minWeight, life_span, img, description } = req.body;
    try {
-      const newDog = await createDog(name, temperament, alturaMax, alturaMin, pesoMax, pesoMin, edadProm);
+      const newDog = await createDog(name, temperament, maxHeight, minHeight, maxWeight, minWeight, life_span, img, description);
       res.status(201).json(newDog);
    } catch (error) {
       res.status(400).send({ error: error.message });
@@ -33,7 +32,6 @@ const getDogByIdHandler = async (req, res) => {
       res.status(400).json({ error: error.message });
    }
 };
-
 
 module.exports = {
    getDogsHandler,
