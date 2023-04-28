@@ -41,7 +41,7 @@ const getDogById = async (id, source) => {
    } else {
       const dbDogRaw = await Dog.findByPk(id, {
          include: [{
-            model: Temperament
+            model: Temperament,
          }]
       });
       const dbDog = cleanDbDog(dbDogRaw);
@@ -52,7 +52,6 @@ const getDogById = async (id, source) => {
 const searchDogByName = async (name) => {
    const dogsApiRaw = (await axios.get("https://api.thedogapi.com/v1/breeds/")).data;
    const dogsApi = cleanArray(dogsApiRaw);
-   console.log(dogsApi);
    let dogsApiByName = [];
    dogsApi.forEach(dog => {
       if (dog.name.toLowerCase().includes(name.toLowerCase())) dogsApiByName.push(dog);

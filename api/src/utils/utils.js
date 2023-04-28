@@ -49,7 +49,7 @@ const cleanDbDog = (dbDogRaw) => {
       img: dbDogRaw.img,
       description: dbDogRaw.description,
       created: dbDogRaw.created,
-      temperament: temperament
+      temperament
    };
    return formattedDog;
 };
