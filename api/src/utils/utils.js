@@ -51,7 +51,6 @@ const cleanDbDog = (dbDogRaw) => {
       created: dbDogRaw.created,
       temperament: temperament
    };
-
    return formattedDog;
 };
 

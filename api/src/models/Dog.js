@@ -15,23 +15,23 @@ module.exports = (sequelize) => {
       unique: true
     },
     maxHeight: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     minHeight: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     maxWeight: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     minWeight: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     life_span: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
     },
     img: {
       type: DataTypes.STRING,

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { Op } = require("sequelize");
 const { Dog, Temperament } = require('../db');
 const { cleanArray, cleanObj, cleanDbDog, cleanDbDogs } = require('../utils/utils');
 
@@ -43,19 +44,31 @@ const getDogById = async (id, source) => {
             model: Temperament
          }]
       });
-      // console.log(dbDogRaw.toJSON());
       const dbDog = cleanDbDog(dbDogRaw);
-      // console.log(dbDog);
       return dbDog;
    }
 };
 
 const searchDogByName = async (name) => {
-   await Dog.findAll({
-      where: {
-         name
-      }
+   const dogsApiRaw = (await axios.get("https://api.thedogapi.com/v1/breeds/")).data;
+   const dogsApi = cleanArray(dogsApiRaw);
+   console.log(dogsApi);
+   let dogsApiByName = [];
+   dogsApi.forEach(dog => {
+      if (dog.name.toLowerCase().includes(name.toLowerCase())) dogsApiByName.push(dog);
    });
+   const dogsDbRaw = await Dog.findAll({
+      where: {
+         name: {
+            [Op.iLike]: `%${name}%`,
+         },
+      },
+      include: [{
+         model: Temperament
+      }]
+   });
+   const dogsDbByName = cleanDbDogs(dogsDbRaw);
+   return [...dogsDbByName, ...dogsApiByName];
 };
 
 const getAllDogs = async () => {
@@ -64,14 +77,10 @@ const getAllDogs = async () => {
          model: Temperament
       }]
    });
-   // console.log(dogsDbRaw);
    const dogsDb = cleanDbDogs(dogsDbRaw);
-   console.log("Dogs DB: ", dogsDb);
    const dogsApiRaw = (await axios.get("https://api.thedogapi.com/v1/breeds/")).data;
-   // console.log(dogsApiRaw);
    const dogsApi = cleanArray(dogsApiRaw);
    return [...dogsDb, ...dogsApi];
-
 };
 
 module.exports = {
