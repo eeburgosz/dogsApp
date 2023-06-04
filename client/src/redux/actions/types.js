@@ -1,0 +1,7 @@
+export const types = {
+   GET_DATA: 'GET_DATA',
+   GET_TEMPERAMENTS: 'GET_TEMPERAMENTS',
+   GET_BREED: 'GET_BREED',
+   GET_DOG_BY_ID: "GET_DOG_BY_ID",
+   CREATE_DOG: "CREATE_DOG"
+};

@@ -34,6 +34,12 @@ const { sequelize } = require("./src/db");
 const port = 3005;
 
 app.listen(port, () => {
-  sequelize.sync({ force: true });
+  sequelize.sync({ alter: true });
   console.log(`Listening on port ${port}`);
 });
+
+// sequelize.sync({ alter: true }).then(() => {
+//   app.listen(3005, () => {
+//     console.log('%s listening at 3005'); // eslint-disable-line no-console
+//   });
+// });

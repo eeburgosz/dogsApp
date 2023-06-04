@@ -1,10 +1,17 @@
-import './App.css';
+import { BrowserRouter } from "react-router-dom";
+import "primereact/resources/themes/arya-green/theme.css";
+import "primereact/resources/primereact.min.css";
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
+import { AppRouter } from "./router/AppRouter";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Dogs</h1>
-    </div>
+    <>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+    </>
   );
 }
 

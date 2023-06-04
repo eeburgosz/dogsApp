@@ -1,0 +1,10 @@
+{
+   "[dockercompose]": {
+      "editor.autoIndent": "full"
+   },
+   "[yaml]": {
+      "editor.autoIndent": "full"
+   },
+   "prettier.useTabs": true,
+   "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
